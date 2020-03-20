@@ -241,7 +241,7 @@ public class test{
 public class test{
    public static void main(String[] args) {
 
-         public static void main(String[] args) {
+         
              int i,num;
              int []A=new int[10] ;  
             for(i=0;i<10;i++){
