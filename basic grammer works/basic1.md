@@ -29,6 +29,9 @@ short realPrice = price * 8 / 10; //再计算出打折之后的价格
 如果正确，假设price  为100 ，那计算之后的
 realPrice值为多少？如果不正确，应该怎么改正？
 
+答：不正确，price * 8 / 10自动转换成int，再赋值给short类型会报错
+要用short realPrice= （short）（price * 8 / 10）; 
+
 
 
 
@@ -61,6 +64,17 @@ realPrice值为多少？如果不正确，应该怎么改正？
 			float f=(float)(d1*5+d2);
 	
 		}
+	
+答：	 void public main(){ 改为public  static void main(String[] args){ 
+		l2=88888888888后加L
+		float f1=0.1;  //f    float f2=123;   //f float类型后加F
+		byte最大不超过127，删去b3=129
+		从double转换到int可能会有损失,i=i*0.1改为i*=0.1
+		int转换到byte可能会有损失,byte b=b1-b2改为byte b=(byte)(b1-b2)
+		从int转换到char可能会有损失,char c=c1+c2-1改为char c=(char)(c1+c2-1)
+		从double转换到float可能会有损失,float f4=f1+f2*0.1改为float f4=(float)(f1+f2*0.1)
+
+
 
 8.已知a,b均是整型变量，写出将a,b两个变量中的值互换的程序
 int   a=2;
@@ -74,7 +88,7 @@ b=c;
 a=a+b;
 b=a-b;
 
-
+答：见p1_8.java
 
 9.写出下列变量a和b的运算结果。
 
@@ -82,7 +96,7 @@ int a = 9 / 3;
 
 int b = 9 % 2;
 
-
+答：a=3,b=1
 
 
 10.判断代码是否有错误，如有，请修改。
@@ -95,13 +109,16 @@ int b3 = 210.9f +2.51;
 
 int b4 = (int)20.9 + (int)2.51;
 
+答: float a = 2.1F;
+	float b = (float)20.9;
+	 int b3 = (int)(210.9f +2.51);
 
 12.给定一个任意的大写字母A~Z，转换为小写字母
-
+答：见p1_12.java
 
 13.java的命名规范
        
-
+变量名必须是一个以字母开头并由字母或数字构成的序列。变量名中所有的字符都是有意义的，并且大小写敏感。变量名的长度基本上没有限制。不能使用 Java 保留字作为变量名。
 
 
 
