@@ -10,12 +10,14 @@ public class Student {
         this.StuScore += 10;
     }
 
-    public String toString() {
+
+    @java.lang.Override
+    public java.lang.String toString() {
         return "Student{" +
-                "number='" + StuNum + '\'' +
-                ", name='" + StuName + '\'' +
-                ", Grade=" + StuGrade +'\''+
-                ", score=" + StuScore +'\''+
+                "StuNum=" + StuNum +
+                ", StuName='" + StuName + '\'' +
+                ", StuGrade='" + StuGrade + '\'' +
+                ", StuScore=" + StuScore +
                 '}';
     }
 }
