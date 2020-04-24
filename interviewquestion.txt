@@ -1,0 +1,102 @@
+```java
+   class  Outer{
+    int  num=10;
+    class  Inner{
+        int num=20;
+        public void show(){
+            int num=30;
+            System.out.println(num);
+            System.out.println(this.num);
+            System.out.println(Outer.this.num);
+        }
+  }
+}
+   //在上面输出语句里面写出相应的代码  得到的结果为:30  20  10
+
+
+
+
+
+
+```
+
+```java
+    abstract class Person{
+      public  abstract void show();
+    }
+    class PersonDemo{
+        public  void  method(Person person){
+            person.show();
+        }
+    }
+
+//测试类:
+    PersonDemo  p=new PersonDemo();
+
+    //是不是要传递一个Person及其子类的对象
+
+
+
+class Worker extends Person{
+public void show(){
+System.out.println("我是工人");
+}
+}
+
+
+PersonDemo  p=new PersonDemo();
+Person w=new Worker();
+p.method(w);
+
+
+
+
+   /**
+        这里面填的是匿名对象
+          p.method(new Person(){
+                         public void  show(){
+                           System.out.println("我是你爸爸");
+                         }
+                       } );
+
+    */
+    //请问p.method()括号里面填写哪些代码会输出"我是你爸爸";
+
+
+
+
+
+
+
+
+
+
+
+
+
+    匿名内部类的面试题:
+    interface  Inter{
+       void  show();
+    }
+    class Outer{
+        void method(){
+        Inter in=new Inter(){
+        void show(){
+        System.out.println("HelloWorld");
+        }
+        }
+        }
+       }
+    }
+    class  OuterDemo{
+       public static void main(){
+        Outer.method().show();
+      }
+
+    }
+    //最终结果得到 HelloWorld
+
+
+    */
+
+
