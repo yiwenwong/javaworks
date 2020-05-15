@@ -1,0 +1,107 @@
+1.编写程序接收用户输入分数信息，如果分数在0—100之间，输出成绩。如果成绩不在该范围内，抛出异常信息，提示分数必须在0—100之间。
+public class TestScore {
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+
+		try {
+			System.out.println("请输入您的分数:");
+			int score = input.nextInt();
+			if (score < 0 || score > 100) {
+				throw new ScoreException("分数必须在0—100之间");
+			}
+			System.out.println("分数为：" + score);
+
+		} catch (ScoreException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+
+	}
+}
+
+
+
+
+​
+
+public class ScoreException extends Exception {
+
+	public ScoreException() {
+		super();
+	}
+
+	public ScoreException(String message) {
+		super(message);
+	}
+
+}
+
+
+2.写一个方法void isTriangle(int a,int b,int c)，判断三个参数是否能构成一个三角形，
+如果不能则抛出异常IllegalArgumentException，显示异常信息 “a,b,c不能构成三角形”，
+如果可以构成则显示三角形三个边长，在主方法中得到命令行输入的三个整数， 调用此方法，并捕获异常。
+
+
+public static void main(String[] args) {
+
+		Scanner sc = new Scanner(System.in);
+		int a = sc.nextInt();
+		int b= sc.nextInt();
+		int c = sc.nextInt();
+		isTriangle(a, b, c);
+	}
+		public static void isTriangle(int a,int b,int c) {
+			try {
+				/*if((a*a+b*b)==c*c ||
+						(a*a+c*c)==b*b ||
+						(b*b+c*c)==a*a) {*/
+				if((a+b)>c && (a+c)>b && (b+c)>a) {
+
+					System.out.println(a+","+b+","+c);
+				}else {
+					throw new IllegalArgumentException("a,b,c不能构成三角形");
+				}
+
+			}catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+
+
+3.编写一个计算N个整数平均值的程序。程序应该提示用户输入N的值，如何必须输入所有N个数。
+如果用户输入的值是一个负数，则应该抛出一个异常并捕获，提示“N必须是正数或者0”。并提示用户再次输入该数
+
+public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		try {
+			System.out.println("请输入需要求几个平均数：");
+			int n = sc.nextInt();
+			System.out.println("你需要输入" + n + "个数：");
+			int a;
+			double sum = 0;
+			// 循环输入数
+			for (int i = 0; i < n; i++) {
+				System.out.println("请输入第" + (i + 1) + "个数：");
+				try {
+					a = sc.nextInt();
+					// 判断是否小于0
+					if (a < 0) {
+						// 小于就抛异常
+						throw new IllegalArgumentException();
+					}
+					sum += a;
+				} catch (Exception e) {// 捕获异常
+					System.out.println("输入的数必须是正整数或者0,请重新输入该数");
+					i -= 1;
+				}
+
+			}
+			System.out.println("平均数是：" + sum / n);
+		} catch (Exception e) {
+			System.out.println("输入的数必须是大于0的整数,请重新输入");
+		} finally {
+			sc.close();
+		}
+	}
+
