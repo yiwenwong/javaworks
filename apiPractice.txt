@@ -1,0 +1,76 @@
+1:需求：请设计一个方法，可以实现获取任意范围内的随机数。
+ public static int getRandom(int min, int max){
+              Random random = new Random();
+              int i = random.nextInt(max) % (max - min + 1) + min;
+              return i;
+          }
+2.定义一个StringBuffer类对象，
+1）使用append方法向对象中添加26个字母，并倒序遍历输入
+2）删除前五个字符
+
+public class StringBufferDemo{
+public static void main(String[] args){
+        StringBuffer buf=new StringBuffer();
+        Character a='a';
+        for(int i=0;i<25; i++){
+            buf.append(a);
+            a=new Character((char)(a+1));
+        }
+        buf.append(a);
+        System.out.println("添加之后："+buf);
+        c
+        System.out.println("翻转之后："+buf);
+        buf.delete(0,5);
+        System.out.println("删除之后："+buf);
+}
+}
+
+
+3.将字符串中指定部分进行反转。
+ public String reverse(String str,int startIndex,int endIndex){
+        if(str !=null && str.length() !=0){
+            char[] arr = str.toCharArray();
+            for(int x = startIndex,y = endIndex;x<y;x++,y--){
+                char temp = arr[x];
+                arr[x] = arr[y];
+                arr[y] = temp;
+            }
+            return new String(arr);
+        }
+        return null;
+        }
+
+4. 编写一个程序，将下面的一段文本中的各个单词的字母顺序翻转，
+“To be or not to be"，将变成"oT eb ro ton ot eb."。
+
+String s = "To be or not to be";
+String[] ss = s.split(" ");
+StringBuffer sb2 = new StringBuffer();
+	for(int i = 0 ; i < ss.length ; i++){
+	StringBuffer sb = new StringBuffer(ss[i]);
+	sb.reverse();
+	sb2.append(sb);
+		if(i == ss.length-1){
+		sb2.append(".");
+		}else{
+			sb2.append(" ");
+		}
+	}
+	System.out.println(sb2);
+
+面试题：5. 编写一个截取字符串的函数，输入为一个字符串和字节数，输出为按字节截取的字符串。
+但是要保证汉字不被截半个，如“我ABC”4，应该截为“我AB”，输入“我ABC汉DEF”，6，
+应该输出为“我ABC”而不是“我ABC+汉的半个”。
+public static void jiequ(String s,int num)  {
+		int count=0;
+		String temp="";
+		for(char a:s.toCharArray()) {
+			count+=(a+"").getBytes().length;
+			if (count>num) {
+				break;
+			}
+			temp+=a;
+		}
+		System.out.println(temp);
+	}
+
