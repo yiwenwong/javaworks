@@ -1,0 +1,223 @@
+```java
+/**
+  练习
+  1.自己实现Collection接口,并且测试所有实现的方法
+public class Collection1 implements Collection(){
+
+
+    transient Object[] elementData;
+     private int size;
+
+
+    　　 public Collection1() {　　
+            super();
+            this.elementData=NULL;
+        }
+
+   public boolean add(E e) {
+
+           elementData[size++] = e;
+           return true;
+       }
+
+
+    public void add(int index, E element) {
+
+
+            System.arraycopy(elementData, index, elementData, index + 1,
+                             size - index);
+
+            elementData[index] = element;
+            size++;
+        }
+
+
+     public E remove(int index) {
+
+             E  oldValue = elementData(index);
+
+             int numMoved = size - index - 1;
+             if (numMoved > 0)
+
+                 System.arraycopy(elementData, index+1, elementData, index,
+                                  numMoved);
+
+             elementData[--size] = null;
+
+             return oldValue;
+         }
+
+
+
+    public void clear() {
+
+
+            for (int i = 0; i < size; i++)
+                elementData[i] = null;
+
+            size = 0;
+        }
+
+     public E set(int index, E element) {
+
+
+             E oldValue = elementData(index);
+
+             elementData[index] = element;
+
+             return oldValue;
+         }
+
+
+     public int indexOf(Object o) {
+            if (o == null) {
+                for (int i = 0; i < size; i++)
+                    if (elementData[i]==null)
+                        return i;
+            } else {
+                for (int i = 0; i < size; i++)
+                    if (o.equals(elementData[i]))
+                        return i;
+            }
+
+            return -1;
+        }
+
+
+      public E get(int index) {
+
+              return elementData(index);
+          }
+
+
+
+
+
+}
+
+public class Test(){
+    public static void main(String [] args){
+
+        Collection con=new Collection1(20);
+        con.add(2);
+        con.remove(0);
+        con.set(3);
+        con.clear();
+        con.add(4);
+        con.indexOf(4);
+    }
+}
+
+
+
+
+
+
+
+  2.自己是尝试 Collection接口里面的con.retainAll()方法
+
+
+
+
+
+
+    private boolean retain all(Collection<?> c) {
+        final Object[] elementData = this.elementData;
+        int r = 0, w = 0;
+        boolean modified = false;
+
+
+     
+            for (; r < size; r++)
+                if (c.contains(elementData[r]))
+                    elementData[w++] = elementData[r];
+       
+           
+
+
+            if (r != size) {
+                System.arraycopy(elementData, r,
+                                 elementData, w,
+                                 size - r);
+                w += size - r;
+            }
+            if (w != size) {
+               
+                for (int i = w; i < size; i++)
+                    elementData[i] = null;
+                modCount += size - w;
+                size = w;
+                modified = true;
+            }
+       
+        return modified;
+    }
+
+
+
+
+
+
+
+  3. wiki上集合练习2
+
+
+
+
+
+
+
+  4. //思考题:为什么会得到这个排序 结果升序,如果集合里面是字符串呢？或者是对象呢？
+
+        vector.add(34);
+        vector.add(4);
+        vector.add(134);
+        vector.add(54);
+        vector.add(14);
+        vector.add(20);
+
+        vector.sort(new Comparator() {
+          @Override
+          public int compare(Object o1, Object o2) {
+            return ((Integer)o1).compareTo((Integer)o2);
+          }
+        });
+
+        System.out.println(vector.toString());
+
+        重写了compare方法，使其元素先被Integer包装，转换成int类型做比较，再排序
+
+
+
+
+
+
+
+
+
+   5.自己尝试写出 Stack 集合特性,并且以代码举例示范
+    分析  Collection   List 接口 和
+    ArrayList  Vector Stack(三个子实现类和其两个父接口的特点)
+
+   Collection是最基本集合接口，它定义了一组允许重复的对象。
+   Collection接口没有自己的实现类，具体的实现类都在他的子接口中
+
+
+
+List:
+
+ 特征：有序且可重复。
+
+       两个重要的实现类：ArrayList和LinkedList
+
+       1.ArrayList特点是有序可重复的
+
+       2.LinkedList是一个双向链表结构的。
+
+
+
+
+ArrayList访问效率高，Vector插入删除效率高，Stack继承Vector但先进后出
+*/
+
+```

@@ -1,0 +1,158 @@
+1.模拟在校学生选课系统,使用集合完成
+
+要求：1.学生类:学号，姓名，所选课程Set<Course>
+
+学生可以对课程做增删改查操作
+
+2.课程类：编号 课程名称
+
+3.学生选课清单类
+
+完成:有n个人 显示出每个人所选的课程信息
+
+如：姓名：张三:    所选课程如下： 9527  java基础 ，9768 C# ，9898 javaScript 等
+
+2.某班级有 40 个学生，学号为 180201-180240，全部参加 Java 集合阶段检测，给出所有同学的成绩（可随机产生，范围为 50-100），
+
+请编写程序将本班各位同学成绩从高往低排序打印输出，注：成绩相同时学号较小的优先打印要求：打印的信息包含学号、姓名（姓名统一为“同学 J”[J=10,11,12。。。]）和成绩
+
+
+
+
+
+
+public class Student(){
+    private int id;
+    private String name;
+    private int score;
+    private Set<Course> course;
+
+    public add(int order,String cname){
+        Course c=new Course(order,cname);
+        course.add(c);
+    }
+
+    public remove(int order,String cname){
+            Course c=new Course(order,cname);
+            course.remove(c);
+        }
+
+
+
+}
+
+public class Course(){
+    private int order;
+    private String cname;
+
+}
+
+public class courseList(){
+
+
+
+    pubic static void main(String [] args){
+        private static List<Student> data = new ArrayList<Student>();
+        int j = 10;
+                    Random random = new Random();
+                    for (int i = 0;i < 40;++i){
+                        data.add(new Student(180201+i,"同学"+(i+j),random.nextInt(51)+50));
+                    }
+        Iterator<Student> iterator = data.iterator();
+                while (iterator.hasNext()){
+                    Student next1 = iterator.next();
+                    int id = next1.getId();
+                    String name = next1.getName();
+                    int score = next1.getScore();
+                    System.out.println("学号："+id+" 姓名："+name+" 成绩："+score);
+
+    }
+}
+
+
+3.在一个列表中存储以下元素：apple,grape,banana,pear
+  返回集合中的最大的和最小的元素
+  将集合进行排序，并将排序后的结果打印在控制台上
+
+import java.util.Collections;
+import java.util.LinkedList;
+
+public class Test3 {
+
+    public static void main(String[] args) {
+      
+        
+        LinkedList<String> link = new LinkedList<String>();
+        
+        link.add("apple");
+        link.add("grape");
+        link.add("banana");
+        link.add("pear");
+        System.out.println("最大的元素为"+Collections.max(link));
+        System.out.println("最小的元素为"+Collections.min(link));
+        
+        Collections.sort(link);
+        for(String s :link){
+            System.out.println(s);
+        }
+    }
+
+}
+
+
+4.产生10个1~20之间的随机数，要求随机数不能重复
+public class RandomDemo {
+24     public static void main(String[] args) {
+25
+26         Random r = new Random();
+27
+28
+29         ArrayList<Integer> array = new ArrayList<Integer>();
+30
+31
+32         int count = 0;
+33
+34
+35         while (count < 10) {
+36
+37             int number = r.nextInt(20) + 1;
+38
+39
+40             if(!array.contains(number)){
+41
+42                 array.add(number);
+43                 count++;
+44             }
+45         }
+46
+47
+48         for(Integer i : array){
+49             System.out.println(i);
+50         }
+51     }
+52 }
+
+
+5.手动输入一行字符串，去掉其中重复字符，打印出不同的那些字符
+
+ import java.util.LinkedHashSet;
+ import java.util.Scanner;
+ public class Test02 {
+     public static void main(String[] args) {
+         Scanner sc = new Scanner(System.in);
+         System.out.println("请你输入一段字符串:");
+         String s = sc.nextLine();
+         LinkedHashSet<Character> lhs = new LinkedHashSet<>();
+         for (int i = 0; i < s.length(); i++) {
+             char c = s.charAt(i);
+             lhs.add(c);
+         }
+         System.out.println(lhs);
+         StringBuilder sb = new StringBuilder();
+         for (Character lh : lhs) {
+             sb.append(lh);
+         }
+         String s1 = sb.toString();
+         System.out.println(s1);
+     }
+ }
