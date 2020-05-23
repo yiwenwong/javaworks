@@ -102,36 +102,31 @@ public class Test3 {
 
 4.产生10个1~20之间的随机数，要求随机数不能重复
 public class RandomDemo {
-24     public static void main(String[] args) {
-25
-26         Random r = new Random();
-27
-28
-29         ArrayList<Integer> array = new ArrayList<Integer>();
-30
-31
-32         int count = 0;
-33
-34
-35         while (count < 10) {
-36
-37             int number = r.nextInt(20) + 1;
-38
-39
-40             if(!array.contains(number)){
-41
-42                 array.add(number);
-43                 count++;
-44             }
-45         }
-46
-47
-48         for(Integer i : array){
-49             System.out.println(i);
-50         }
-51     }
-52 }
+     public static void main(String[] args) {
 
+         Random r = new Random();
+
+
+          ArrayList<Integer> array = new ArrayList<Integer>();
+
+         int count = 0;
+
+
+         while (count < 10) {
+
+              int number = r.nextInt(20) + 1;
+
+               if(!array.contains(number)){
+                   array.add(number);
+                count++;
+              }
+          }
+
+         for(Integer i : array){
+             System.out.println(i);
+          }
+  }
+}
 
 5.手动输入一行字符串，去掉其中重复字符，打印出不同的那些字符
 
