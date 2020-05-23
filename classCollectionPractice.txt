@@ -1,0 +1,201 @@
+ 课堂练习:
+      1.编写一个程序,获取10个1~20数据 并且不能重复
+      public class RandomDemo {
+           public static void main(String[] args) {
+
+               Random r = new Random();
+
+
+                ArrayList<Integer> array = new ArrayList<Integer>();
+
+               int count = 0;
+
+
+               while (count < 10) {
+
+                    int number = r.nextInt(20) + 1;
+
+                     if(!array.contains(number)){
+                         array.add(number);
+                      count++;
+                    }
+                }
+
+               for(Integer i : array){
+                   System.out.println(i);
+                }
+        }
+      }
+
+      2.键盘录入5个学生信息（姓名,语文成绩,数学成绩,英语成绩),按照成绩总分高低来进行排序输出
+      import java.util
+
+     public class Student{
+          private String name;
+          private int chinese;
+          private int math;
+          private int english;
+          private int total;
+
+          public Student(String name, int chinese, int math, int english) {
+            this.name = name;
+            this.chinese = chinese;
+            this.math = math;
+            this.english = english;
+            this.total = this.chinese+this.math+this.english;
+          }
+
+          public String getName() {
+              return name;
+          }
+
+          public int getChinese() {
+              return chinese;
+          }
+
+          public int getMath() {
+              return math;
+          }
+
+          public int getEnglish() {
+              return english;
+          }
+
+          public int getTotal() {
+              return total;
+          }
+
+        @java.lang.Override
+        public java.lang.String toString() {
+            return "Student{" +
+                    "name='" + name + '\'' +
+                    ", chinese=" + chinese +
+                    ", math=" + math +
+                    ", english=" + english +
+                    ", total=" + total +
+                    '}';
+        }
+
+          @Override
+          public int compareTo(Student o) {
+            int num = this.total - o.getTotal();
+
+            int key = num == 0 ? this.math - o.getMath() : num;
+
+            int num1 = key == 0 ? this.chinese - o.getChinese() : key;
+
+            int num2 =  num1 == 0 ? this.english - o.getEnglish() : num1;
+
+            int num3 = num2 == 0 ? this.name.compareTo(o.getName()) : num2;
+
+
+            return num3;
+          }
+
+      }
+
+
+
+
+
+      public class printScore{
+        public static void main (String [] args){
+            Scanner sc = new Scanner(System.in);
+            LinkedHashSet<Student> student = new LinkedHashSet();
+
+            for(i=0;i<5;i++){
+            student.add(new Student(sc.next(),sc.nextInt(),sc.nextInt(),sc.nextInt()));
+}
+
+            System.out.println(student);
+
+
+}
+}
+
+
+
+
+
+      3.TreeSet集合存储自定义对象并且遍历
+       Person  属性: 姓名  年龄  考试成绩  平均分
+      输出:
+        按照平均分排序,如果平均分一样按照姓名排序   (姓名为英文字母,不能是汉字)
+
+import java.util
+
+public class Person{
+    private String name;
+    private int age;
+    private int score;
+    private int average;
+
+
+    public Person(String name, int age, int score) {
+        this.name = name;
+        this.age = age;
+        this.score = score;
+        this.average= score/3;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getAverage() {
+        return average;
+    }
+
+
+    @java.lang.Override
+    public java.lang.String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", score=" + score +
+                ", average=" + average +
+                '}';
+    }
+
+    @Override
+    public int compareTo(Person o) {
+
+        int num = this.average - o.getAverage();
+
+        int key = num == 0 ? this.name.length() - o.getName().length() : num;
+
+        int num1 = key == 0 ? this.name.compareTo(o.getName()) : key;
+
+        return num1;
+    }
+
+}
+
+
+
+
+
+public class print{
+    public static void main (String [] args){
+        Scanner sc = new Scanner(System.in);
+        TreeSet<Person> person = new TreeSet();
+
+        for(i=0;i<5;i++){
+            person.add(new Person(sc.next(),sc.nextInt(),sc.nextInt() ));
+        }
+
+        System.out.println(person);
+
+
+    }
+}
+
+*/
