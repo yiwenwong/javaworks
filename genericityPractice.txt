@@ -1,0 +1,261 @@
+第一题
+1.定义一个泛型Dao<T>，在其中顶一个Map成员变量,Map的键为String类型，值为T类型
+分别创建以下方法:
+public void save(String id,T entity) 保存T乐行的对象到map集合中
+public T get(String id) 从map中获取id对应的对象
+public  void update(String id,T entity) 替换map中的key为id的内容
+public List<T> list()  返回map中所有的 T 对象
+public  void delete(String id) 删除指定对象
+
+
+
+import java.util.*;
+import java.util.Map.Entry;
+
+public class DAO<T> {
+
+	private Map<String, T> map;
+
+	public Map<String, T> getMap(){
+		return map;
+	}
+
+	public void setMap(Map<String, T> map){
+		this.map = map;
+	}
+
+	public void save(String id, T entity){
+		map.put(id, entity);
+	}
+
+	T get(String id){
+		return map.get(id);
+	}
+
+	void update(String id, T entity){
+		map.put(id, entity);
+	}
+
+	Collection<T> list(){
+		//List<T> list = new ArrayList<T>();
+		Collection<T> list = map.values();
+		return list;
+	}
+
+	List<T> list1(){
+		List<T> list = new ArrayList<T>();
+		for(String s: map.keySet()){
+			list.add(map.get(s));
+		}
+		return list;
+	}
+
+
+	void delete(String id){
+		map.remove(id);
+	}
+
+
+	Set<String> getKey(){
+		Set<String> s = new HashSet<String>();
+		return s = map.keySet();
+
+	}
+}
+
+
+
+
+定义一个User类  Integer id   String name
+
+
+
+
+
+public class User {
+
+	private int id;
+
+	private String name;
+
+
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + "]";
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+
+		result = prime * result + id;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+
+		if (id != other.id)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+	public User(int id, String name) {
+		super();
+		this.id = id;
+
+		this.name = name;
+	}
+}
+
+
+
+定义一个测试类 分别对上述方法进行测试
+
+public class TestDAO {
+
+	public void test1(){
+		DAO<User> dao = new DAO<User>();
+		Map<String, User> map = new HashMap<String, User>();
+		dao.setMap(map);
+		//map = dao.getMap();
+		dao.save("AA", new User(1,"c"));
+		dao.save("BB", new User(5,"cpp"));
+		dao.save("GG", new User(3,"java"));
+		dao.save("DD", new User(2,"python"));
+		dao.save("EE", new User(6,"rust"));
+
+ 	System.out.println("AA = "+dao.get("AA"));
+ 	System.out.println("BB = "+dao.get("BB"));
+ 	System.out.println("EE="+dao.get("EE"));
+
+		System.out.println("遍历User集合");
+		Set<Map.Entry<String, User>> entry = dao.getMap().entrySet();
+		for(Map.Entry<String, User> en:entry){
+			System.out.println(en);
+		}
+
+		System.out.println("更新GG");
+		dao.update("GG", new User(3,45,"Lico"));
+    	System.out.println("GG="+dao.get("GG"));
+		for(Map.Entry<String, User> en:entry){
+			System.out.println(en);
+		}
+
+
+		System.out.println("删除FF");
+		dao.delete("FF");
+		for(Map.Entry<String, User> en:entry){
+			System.out.println(en);
+		}
+
+
+		System.out.println("使用dao.list()方法遍历User信息");
+		for(User user: dao.list1()){
+			System.out.println(user);
+		}
+
+		System.out.println("使用dao.getKey()方法遍历Key信息");
+		for(String str: dao.getKey()){
+			System.out.println(str);
+			System.out.println(str+"===="+dao.getMap().get(str));
+		}
+
+
+		for(User list : dao.list()){
+			System.out.println(list);
+		}
+		System.out.println("删除User集合CC");
+		dao.delete("CC");
+		for(User list : dao.list()){
+			System.out.println(list);
+		}
+
+	}
+}
+
+
+
+
+第二题.定义泛型类，成员变量是Number类或其子类对象的数组，成员方法有：求数组元素最小值、最大值和平均值。创建泛型类对象，分别求Integer和Double型数组的最小最大、平均值
+
+
+public class Array <T extends Number>{
+
+    private T [] array;
+
+    public Array(T[] array)
+    {
+        this.array=array;
+    }
+    public void getMax()
+    {
+
+        T max=this.array[0];
+        for(int i=1;i<this.array.length;i++)
+        {
+            if(array[i].toString().compareTo(max.toString())>0)
+            {
+                max=array[i];
+            }
+        }
+
+        System.out.println("数组元素中最大的值为: "+max);
+
+    }
+    public void getMin()
+    {
+
+        T min=this.array[0];
+        for(int i=1;i<this.array.length;i++)
+        {
+            if(array[i].toString().compareTo(min.toString())<0)
+            {
+                min=array[i];
+            }
+        }
+
+        System.out.println("数组元素中最小的值为: "+min);
+
+    }
+    public void  getAver()
+    {
+        double ave=0.0;
+        double sum=0.0;
+
+        for(int i=0;i<array.length;i++)
+        {
+            sum+=array[i].doubleValue();
+        }
+        ave=sum/array.length;
+        System.out.println("该数组的平均值为:  "+ave);
+
+    }
+
+
+
+}
