@@ -1,0 +1,371 @@
+/**
+  1.练习一
+    复制文本文件
+
+    import java.io.File;
+    import java.io.FileInputStream;
+    import java.io.FileOutputStream;
+    import java.io.IOException;
+
+    public class txtCopy {
+
+      public static void main(String[] args) throws IOException {
+        File file = new File("the/1.txt");
+        File file2 = new File("the/2.txt");
+        if(!file2.exists()){
+          file2.createNewFile();
+        }
+
+        FileInputStream fileInputStream = new FileInputStream(file);
+        byte [] b=new byte[(int)file.length()];
+        fileInputStream.read(b);
+        fileInputStream.close();
+
+        FileOutputStream fileOutputStream = new FileOutputStream(file2);
+        fileOutputStream.write(b);
+        fileOutputStream.close();
+
+      }
+
+    }
+
+
+
+    复制图片
+
+ import java.io.File;
+ import java.io.FileInputStream;
+ import java.io.FileOutputStream;
+ import java.io.IOException;
+
+
+ public class ImgCopy {
+
+   public static void main(String[] args) throws IOException {
+     File file = new File("img/1.jpg");
+     File file2 = new File("img/2.jpg");
+     if(!file2.exists()){
+       file2.createNewFile();
+     }
+
+     FileInputStream fileInputStream = new FileInputStream(file);
+     byte [] b=new byte[(int)file.length()];
+     fileInputStream.read(b);
+     fileInputStream.close();
+
+     FileOutputStream fileOutputStream = new FileOutputStream(file2);
+     fileOutputStream.write(b);
+     fileOutputStream.close();
+
+   }
+
+ }
+
+
+    把ArrayList集合中的字符串数据存储到文本文件
+
+     import java.io.File;
+     import java.io.FileOutputStream;
+     import java.io.IOException;
+
+
+     public class ImgCopy {
+
+       public static void main(String[] args) throws IOException {
+         File file = new File("the.txt");
+
+         if(!file.exists()){
+           file.createNewFile();
+         }
+
+          ArrayList al=new ArrayList(1,2,3);
+
+         FileOutputStream fileOutputStream = new FileOutputStream(file,true);
+         fileOutputStream.write(al);
+         fileOutputStream.close();
+
+       }
+
+     }
+
+
+
+
+    从文本文件中读取数据(每一行为一个字符串数据)到集合中，并遍历集合
+
+ import java.io.File;
+ import java.io.BufferedReader;
+ import java.io.FileInputStream;
+ import java.io.FileOutputStream;
+ import java.io.IOException;
+
+
+ public class ImgCopy {
+
+   public static void main(String[] args) throws IOException {
+    File file = new File("the.txt");
+     if(!file.exists()){
+       file.createNewFile();
+     }
+
+     BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("test.txt")));
+           ArrayList<String> array = new ArrayList<String>();
+
+            while ((str = reader.readLine()) != null) {
+                array.add(str);
+            }
+
+            reader.close();
+
+            for (String s : array) {
+            			System.out.println(s);
+            		}
+
+   }
+
+ }
+
+    复制单极文件夹
+
+    import java.io.BufferedInputStream;
+    import java.io.BufferedOutputStream;
+    import java.io.File;
+    import java.io.FileInputStream;
+    import java.io.FileOutputStream;
+    import java.io.IOException;
+
+
+    public class CopyFolder {
+    	public static void main(String[] args) throws IOException {
+
+    		File srcFolder = new File("e:\\demo");
+
+    		File destFolder = new File("e:\\test");
+
+    		if (!destFolder.exists()) {
+    			destFolder.mkdir();
+    		}
+
+
+    		File[] fileArray = srcFolder.listFiles();
+
+    		for (File file : fileArray) {
+
+    			String name = file.getName();
+    			File newFile = new File(destFolder, name);
+
+    			copyFile(file, newFile);
+    		}
+    	}
+
+    	private static void copyFile(File file, File newFile) throws IOException {
+    		BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+    		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newFile));
+
+    		byte[] bys = new byte[1024];
+    		int len = 0;
+    		while ((len = bis.read(bys)) != -1) {
+    			bos.write(bys, 0, len);
+    		}
+
+    		bos.close();
+    		bis.close();
+    	}
+    }
+
+
+    复制单极文件夹中指定文件并修改文件名称
+
+     import java.io.BufferedInputStream;
+        import java.io.BufferedOutputStream;
+        import java.io.File;
+        import java.io.FileInputStream;
+        import java.io.FileOutputStream;
+        import java.io.IOException;
+
+
+        public class CopyFolder {
+        	public static void main(String[] args) throws IOException {
+
+        		File srcFile = new File("e:\\the.txt");
+
+        		File destFolder = new File("e:\\test");
+
+        		if (!destFolder.exists()) {
+        			destFolder.mkdir();
+        		}
+
+        			String name = "theNext.txt";
+        			File newFile = new File(destFolder, name);
+
+        			copyFile(file, newFile);
+
+        	}
+
+        	private static void copyFile(File file, File newFile) throws IOException {
+        		BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+        		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newFile));
+
+        		byte[] bys = new byte[1024];
+        		int len = 0;
+        		while ((len = bis.read(bys)) != -1) {
+        			bos.write(bys, 0, len);
+        		}
+
+        		bos.close();
+        		bis.close();
+        	}
+        }
+
+
+    复制多极文件夹
+
+     private static void CopyFolder(File srcFile, File targetFile) throws IOException {
+
+            if (srcFile.isDirectory()) {
+
+                File newFolder = new File(targetFile,srcFile.getName());
+                newFolder.mkdir();
+
+
+                File[] files = srcFile.listFiles();
+                for(File file:files){
+                    CopyFolder(file, newFolder);
+                }
+            }else {
+
+                File newFile = new File(targetFile,srcFile.getName());
+                copyFiles(srcFile, newFile);
+            }
+        }
+
+        private static void copyFile(File file, File newFile) throws IOException {
+                		BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+                		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newFile));
+
+                		byte[] bys = new byte[1024];
+                		int len = 0;
+                		while ((len = bis.read(bys)) != -1) {
+                			bos.write(bys, 0, len);
+                		}
+
+                		bos.close();
+                		bis.close();
+                	}
+
+
+
+    键盘录入5个学生信息(姓名,语文成绩,数学成绩,英语成绩),按照总分从高到低存入文本文件
+
+    public class Student {
+        private String name;
+        private int chinese;
+        private int math;
+        private int english;
+
+        public Student() {
+            super();
+        }
+
+        public Student(String name, int chinese, int math, int english) {
+            this.name = name;
+            this.chinese = chinese;
+            this.math = math;
+            this.english = english;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getChinese() {
+            return chinese;
+        }
+
+        public void setChinese(int chinese) {
+            this.chinese = chinese;
+        }
+
+        public int getMath() {
+            return math;
+        }
+
+        public void setMath(int math) {
+            this.math = math;
+        }
+
+        public int getEnglish() {
+            return english;
+        }
+
+        public void setEnglish(int english) {
+            this.english = english;
+        }
+
+        public int getTotal(){
+            return (this.chinese + this.math + this.english);
+        }
+
+        @Override
+        public String toString() {
+            return "Student{" +
+                    "name='" + name + '\'' +
+                    ", chinese=" + chinese +
+                    ", math=" + math +
+                    ", english=" + english +
+                    '}';
+        }
+    }
+
+
+
+    public class Demo2 {
+        public static void main(String[] args) throws IOException {
+
+            ArrayList <Student> list = new ArrayList <>();
+
+            for (int i = 0;i < 5;i++){
+                //输入学生信息
+                Scanner sc = new Scanner(System.in);
+                System.out.println("请输入学生的姓名：");
+                String name = sc.nextLine();
+                System.out.println("请输入该学生的语文成绩：");
+                int chinese = sc.nextInt();
+                System.out.println("请输入该学生的数学成绩：");
+                int math = sc.nextInt();
+                System.out.println("请输入该学生的英语成绩：");
+                int english = sc.nextInt();
+
+                //创建学生对象并录入信息
+                Student s = new Student();
+                s.setName(name);
+                s.setChinese(chinese);
+                s.setMath(math);
+                s.setEnglish(english);
+
+                //将学生添加到集合里
+                list.add(s);
+            }
+
+            //3.遍历集合并写入文件
+            BufferedWriter writer = new BufferedWriter(new FileWriter("Day27_Thread01\\student.txt"));
+            for (Student s :list) {
+                StringBuilder sb = new StringBuilder("姓名：" + s.getName()  + ", 语文成绩：" + s.getChinese() +
+                        ", 数学成绩：" + s.getMath() + ", 英语成绩：" + s.getEnglish());
+                writer.write(sb.toString());
+                writer.newLine();
+                writer.flush();
+            }
+
+            //关闭资源
+            writer.close();
+        }
+    }
+
+
+
+*/
