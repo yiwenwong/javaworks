@@ -1,0 +1,215 @@
+1.找到指定文件及其子目录下面的所有的txt文件,并且把满足条件的文件全部读取出来写入到另一个txt文件里面去(使用递归完成)
+
+import java.io.BufferedInputStream;
+    import java.io.BufferedOutputStream;
+    import java.io.File;
+    import java.io.FileInputStream;
+    import java.io.FileOutputStream;
+    import java.io.IOException;
+
+
+    public class CopyFolder {
+    	public static void main(String[] args) throws IOException {
+
+    		File srcFolder = new File("e:\\demo");
+
+    		File destFolder = new File("e:\\test");
+
+    		if (!destFolder.exists()) {
+    			destFolder.mkdir();
+    		}
+
+            File newFile = new File(destFolder, "all.txt");
+
+
+    		 File[] files=srcFolder.listFiles(new FilenameFilter() {
+                                   @Override
+                                   public boolean accept(File dir, String name) {
+                                       return name.endsWith(".txt");
+                                   }
+                               });
+
+
+    		for (File file : files) {
+
+    			copyFile(file, newFile);
+    		}
+    	}
+
+    	private static void copyFile(File file, File newFile) throws IOException {
+    		BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+    		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(newFile)，true);
+
+    		byte[] bys = new byte[1024];
+    		int len = 0;
+    		while ((len = bis.read(bys)) != -1) {
+    			bos.write(bys, 0, len);
+    		}
+
+    		bos.close();
+    		bis.close();
+    	}
+    }
+
+
+
+
+2.利用字节流或者换成字节流的方式以指定的格式输入数据 如:xxx,xxx,xxx,最后一个数据以 .号结束，一行最多五个数据
+
+public class input{
+    public static void main(String [] args){
+        File file=new File("e:\\demo");
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file)，true);
+
+        ArrayList <byte []> array=new ArrayList<byte []>();
+
+        array.add(1);
+        array.add(1);
+        array.add(1);
+        array.add(1);
+        array.add(1);
+
+        for(int i=0;i<array.size();i++){
+
+            if((i+1)/5!=0) {
+            bos.write(array.get(i),0,len);
+            bos.write(",");
+            }
+            else {
+             bos.write(array.get(i),0,len);
+                        bos.write(".\n");
+            }
+
+        }
+
+        bos.close();
+    }
+}
+
+
+3.创建a/test.txt文件并在其中输入"hello world",创建一个输入流读取该文件中的文本,并且把小写的l变成大写L再利用输出流写入到b/test.txt中
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Topic3 {
+
+    public static void crefile() {
+        File file = new File("file","test.txt");
+        if(!file.exists()) {
+
+                file.createNewFile();
+
+        }
+
+        FileOutputStream fos = null;
+        String content = "hello world";
+        byte[] b = content.getBytes();
+
+        fos = new FileOutputStream(file);
+
+        for(int i = 0;i < b.length;i++) {
+
+                            fos.write(b[i]);
+        }
+
+
+        File dest = new File("file","test2.txt");
+
+
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                BufferedWriter bw = new BufferedWriter(new FileWriter(dest));
+
+            String newContent = br.readLine().replace("l","L");
+            bw.write(newContent);
+
+        }
+
+
+    public static void main(String[] args) {
+        crefile();
+    }
+}
+
+
+4.在程序中创建一个Student类型的对象，并把对象信息保存到/io/student.txt文件中，然后再从文件中把Student对象的信息读出,并且把读出来的数据重新赛给一个对象,然后显示在控制台上
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Student {
+
+    private Integer id;
+    private String name;
+
+
+    public Student(Integer id, String name ) {
+        super();
+        this.id = id;
+        this.name = name;
+
+    }
+
+    public Integer getId() {
+        return id;
+    }
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Student [id=" + id + ", name=" + name + "]";
+    }
+
+    //测试类
+    public static void main(String[] args) {
+
+        Student stu = new Student(100,"suwukong" );
+        File file = new File("file","stu.txt");
+
+        if(!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        File readFile = new File("file","stu.txt");
+
+                ObjectOutputStream os = new
+               ObjectOutputStream(new FileOutputStream(file));
+                ObjectInput is = new ObjectInputStream
+                (new FileInputStream(readFile));
+
+
+            os.writeObject(stu);//写入
+            Student stu2 = (Student) is.readObject();//读取
+            System.out.println(stu);
+
+            e.printStackTrace();
+
+    }
+}
