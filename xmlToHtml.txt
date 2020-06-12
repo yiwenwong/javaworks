@@ -1,0 +1,123 @@
+import club.banyuan.demo.Student;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
+
+/**
+ * @author sanye
+ * @version 1.0
+ * @date 2020/6/6 1:34 下午
+ */
+public class XMLDemo2 {
+
+  public static void main(String[] args) throws IOException, DocumentException {
+    //获取xml文档信息 使用dom4j的方式来获取文档内容信息
+
+    File file = new File("src/first.xml");
+    List<Student> info = getInfo(file); //获取所有的数据
+   // System.out.println(info);
+
+    //html文件格式模板
+    File  file1=new File("index.html");
+
+    //目标html文件
+    File  file2=new File("Info.html");
+    if(!file1.exists()){
+      file1.createNewFile();
+    }
+
+    //背景图片
+    File  img=new File("img/1.jpg");
+    IntoHtml(info, file1,file2,img.toString());
+
+  }
+
+  //将获取到的数据写入html文件中 并且使用table格式 可以自定义添加样式
+  public  static  void  IntoHtml(List<Student>  list,File  file,File  file1,String img) throws IOException {
+    InputStream  inputStream=new FileInputStream(file);
+    byte[] bytes=new byte[(int)file.length()];
+    inputStream.read(bytes);
+    inputStream.close();
+    String   fileContent=new String(bytes);
+
+    // 给表格添加背景图片
+    String table="<table style='background-image:url("+img+");width:400px;height:100px;'"
+        + "><tr><td>姓名</td><td>地址</td><td>年龄</td></tr>";
+    for (Student  stu: list) {
+        table=table+"<tr><td>"+stu.getName()+"</td><td>"+stu.getAddress()
+            +"</td><td>"+stu.getAge()+"</td></tr>";
+    }
+    table+="</table>";
+
+    //替代之后形成新的内容
+    String  newContent=fileContent.replaceAll("1", table);
+
+
+    OutputStream  outputStream=new FileOutputStream(file1);
+    outputStream.write(newContent.getBytes());
+    outputStream.close();
+
+  }
+
+  //获取xml所有的数据
+  public   static List<Student> getInfo(File  file) throws DocumentException {
+
+    List<Student>  list=new ArrayList<>();
+
+    SAXReader reader = new SAXReader();
+    Document doc = reader.read(file);
+    Element rootElement = doc.getRootElement(); //获取根元素
+    Iterator<Node> iterator = rootElement.nodeIterator();
+    while (iterator.hasNext()) {  //文本也是一个节点
+//      System.out.println("节点名叫:"+iterator.next().getName());
+      Node node = iterator.next();
+      if ("students".equalsIgnoreCase(node.getName())) {
+        Element element = (Element) node;
+        Iterator<Node> it = element.nodeIterator();
+        while (it.hasNext()) {
+          Node node1 = it.next();
+          if ("student".equalsIgnoreCase(node1.getName())) {
+
+            Student student=new Student();
+
+            Element element1 = (Element) node1;
+            Iterator<Node> it1 = element1.nodeIterator();
+            while (it1.hasNext()) {
+              Node node2 = it1.next();
+              if ("name".equalsIgnoreCase(node2.getName())) {
+                String name = node2.getText();
+                student.setName(name);
+                System.out.println("name=" + name);
+              }
+              if ("age".equalsIgnoreCase(node2.getName())) {
+                String age = node2.getText();
+                student.setAge(Integer.valueOf(age));
+                System.out.println("年龄=" + age);
+              }
+              if ("address".equalsIgnoreCase(node2.getName())) {
+                String address = node2.getText();
+                student.setAddress(address);
+                System.out.println("address=" + address);
+              }
+            }
+            list.add(student);
+          }
+        }
+      }
+    }
+    return list;
+  }
+
+}
